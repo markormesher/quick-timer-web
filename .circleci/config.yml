@@ -1,0 +1,141 @@
+# This file is maintained by Tedium - manual edits will be overwritten!
+
+version: "2.1"
+jobs:
+  cachekey:
+    docker:
+      - image: cimg/base:2024.12
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          command: ./task cachekey
+      - persist_to_workspace:
+          root: .
+          paths:
+            - ./.task-meta-cachekey*
+  checkout:
+    docker:
+      - image: cimg/base:2024.12
+    steps:
+      - checkout:
+          path: .
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+  ci-all:
+    docker:
+      - image: cimg/base:2024.12
+    steps:
+      - run:
+          command: echo "Done"
+  deps-js:
+    docker:
+      - image: docker.io/node:23.5.0-slim
+    steps:
+      - attach_workspace:
+          at: .
+      - restore_cache:
+          keys:
+            - deps-js-v6-{{ checksum ".task-meta-cachekey-js" }}
+            - deps-js-v6-
+      - run:
+          command: |-
+            corepack enable
+            ./task deps-js
+      - save_cache:
+          key: deps-js-v6-{{ checksum ".task-meta-cachekey-js" }}
+          paths:
+            - /usr/local/lib/node_modules
+            - node_modules
+  fetch-task:
+    docker:
+      - image: ghcr.io/markormesher/task-fetcher:v0.4.1
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          command: cp /task .
+      - persist_to_workspace:
+          root: .
+          paths:
+            - ./task
+  imgbuild-imgpush:
+    docker:
+      - image: cimg/base:2024.12
+    steps:
+      - attach_workspace:
+          at: .
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          command: |-
+            echo "${GHCR_PUBLISH_TOKEN}" | docker login ghcr.io -u markormesher --password-stdin
+            ./task imgbuild
+            ./task imgpush
+  imgrefs:
+    docker:
+      - image: docker.io/alpine/git:v2.47.1
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          command: ./task imgrefs
+      - persist_to_workspace:
+          root: .
+          paths:
+            - ./.task-meta-imgrefs
+            - ./**/.task-meta-imgrefs
+workflows:
+  version: 2
+  main:
+    jobs:
+      - checkout:
+          requires: []
+          filters:
+            tags:
+              only: /.*/
+      - fetch-task:
+          requires: []
+          filters:
+            tags:
+              only: /.*/
+      - imgrefs:
+          requires:
+            - checkout
+            - fetch-task
+          filters:
+            tags:
+              only: /.*/
+      - cachekey:
+          requires:
+            - checkout
+            - fetch-task
+          filters:
+            tags:
+              only: /.*/
+      - deps-js:
+          requires:
+            - cachekey
+            - checkout
+            - fetch-task
+          filters:
+            tags:
+              only: /.*/
+      - imgbuild-imgpush:
+          requires:
+            - checkout
+            - fetch-task
+            - imgrefs
+          filters:
+            tags:
+              only: /.*/
+      - ci-all:
+          requires:
+            - deps-js
+            - imgbuild-imgpush
+            - imgrefs
+          filters:
+            tags:
+              only: /.*/

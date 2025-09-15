@@ -1,0 +1,5 @@
+node_modules/
+dist/
+
+.task/
+.task-meta-*
