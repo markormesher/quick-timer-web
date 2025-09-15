@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import { PrefBar } from "./prefs.js";
+import { PrefBar, readPref } from "./prefs.js";
 
 function App(): ReactElement {
   const timers = [30_000, 60_000, 90_000, 120_000, 150_000, 180_000, 240_000];
@@ -11,10 +11,19 @@ function App(): ReactElement {
 
   const [updateAvailable, setUpdateAvailable] = React.useState(false);
 
-  function startTimer(t: number) {
+  const startTimer = (t: number) => {
     setActiveTimerDuration(t);
     setActiveTimerStart(new Date().getTime());
-  }
+  };
+
+  const onTimerFinished = React.useCallback(() => {
+    setActiveTimerStart(0);
+    setActiveTimerDuration(0);
+
+    if (readPref("vibrate-enabled") == "on" && "vibrate" in navigator) {
+      navigator.vibrate(1000);
+    }
+  }, []);
 
   React.useEffect(() => {
     if (activeTimerStart == 0 || activeTimerDuration == 0) {
@@ -24,14 +33,13 @@ function App(): ReactElement {
     const now = new Date().getTime();
     const remaining = activeTimerDuration - (now - activeTimerStart);
     if (remaining <= 0) {
-      setActiveTimerStart(0);
-      setActiveTimerDuration(0);
+      onTimerFinished();
       return;
     }
 
     setActiveTimerRemaining(remaining);
     setTimeout(() => setAnimationTick(now), 100);
-  }, [animationTick, activeTimerDuration, activeTimerStart]);
+  }, [animationTick, activeTimerDuration, activeTimerStart, onTimerFinished]);
 
   React.useEffect(() => {
     navigator.serviceWorker?.addEventListener("message", (evt: MessageEvent) => {

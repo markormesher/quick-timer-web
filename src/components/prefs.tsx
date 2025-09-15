@@ -63,4 +63,8 @@ function usePersistedToggle(key: string, values: string[]): [string, () => void]
   return [reactState, toggle];
 }
 
-export { PrefBar };
+function readPref(key: string): string {
+  return localStorage.getItem(key) ?? "";
+}
+
+export { PrefBar, readPref };
