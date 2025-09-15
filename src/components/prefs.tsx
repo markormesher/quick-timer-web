@@ -2,9 +2,9 @@ import React, { ReactElement } from "react";
 import { Icon } from "./icon.js";
 
 function PrefBar(): ReactElement {
-  const [theme, toggleTheme] = usePersistedToggle("theme", ["auto", "light", "dark"]);
-  const [soundEnabled, toggleSoundEnabled] = usePersistedToggle("sound-enabled", ["on", "off"]);
-  const [vibrateEnabled, toggleVibrateEnabled] = usePersistedToggle("vibrate-enabled", ["on", "off"]);
+  const [theme, toggleTheme] = usePrefToggle("theme", ["auto", "light", "dark"]);
+  const [soundEnabled, toggleSoundEnabled] = usePrefToggle("sound-enabled", ["on", "off"]);
+  const [vibrateEnabled, toggleVibrateEnabled] = usePrefToggle("vibrate-enabled", ["on", "off"]);
 
   const themeIcons: Record<string, string> = {
     auto: "brightness_auto",
@@ -37,7 +37,7 @@ function PrefBar(): ReactElement {
   );
 }
 
-function usePersistedToggle(key: string, values: string[]): [string, () => void] {
+function usePrefToggle(key: string, values: string[]): [string, () => void] {
   const [reactState, setReactState] = React.useState("");
 
   React.useEffect(() => {
