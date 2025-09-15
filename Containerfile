@@ -1,4 +1,4 @@
-FROM docker.io/node:24.2.0-slim AS builder
+FROM docker.io/node:24.8.0-slim AS builder
 WORKDIR /app
 
 RUN corepack enable

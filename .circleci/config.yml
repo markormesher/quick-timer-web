@@ -4,7 +4,7 @@ version: "2.1"
 jobs:
   cachekey:
     docker:
-      - image: cimg/base:2024.12
+      - image: cimg/base:2025.09
     steps:
       - attach_workspace:
           at: .
@@ -16,7 +16,7 @@ jobs:
             - ./.task-meta-cachekey*
   checkout:
     docker:
-      - image: cimg/base:2024.12
+      - image: cimg/base:2025.09
     steps:
       - checkout:
           path: .
@@ -26,13 +26,13 @@ jobs:
             - .
   ci-all:
     docker:
-      - image: cimg/base:2024.12
+      - image: cimg/base:2025.09
     steps:
       - run:
           command: echo "Done"
   deps-js:
     docker:
-      - image: docker.io/node:23.5.0-slim
+      - image: docker.io/node:24.8.0-slim
     steps:
       - attach_workspace:
           at: .
@@ -63,7 +63,7 @@ jobs:
             - ./task
   imgbuild-imgpush:
     docker:
-      - image: cimg/base:2024.12
+      - image: cimg/base:2025.09
     steps:
       - attach_workspace:
           at: .
@@ -89,7 +89,7 @@ jobs:
             - ./**/.task-meta-imgrefs
   lint-js:
     docker:
-      - image: docker.io/node:23.5.0-slim
+      - image: docker.io/node:24.8.0-slim
     steps:
       - attach_workspace:
           at: .
