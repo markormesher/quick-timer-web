@@ -1,3 +1,5 @@
+declare const self: ServiceWorkerGlobalScope;
+
 const cacheName = "qtw-v2";
 
 function log(...args: unknown[]) {
@@ -7,29 +9,17 @@ function log(...args: unknown[]) {
 
 self.addEventListener("install", () => {
   log("installing");
+  self.skipWaiting().catch((err) => log("failed to skip waiting", err));
 });
 
-self.addEventListener("fetch", (evt: FetchEvent) => {
-  evt.respondWith(
-    (async () => {
-      const cache = await caches.open(cacheName);
+self.addEventListener("activate", () => {
+  log("activating");
 
-      const cacheRes = await cache.match(evt.request);
-      if (cacheRes) {
-        log("serving " + evt.request.url + " from cache");
-        return cacheRes;
-      }
+  self.clients.claim().catch((err) => log("failed to claim clients", err));
 
-      const liveRes = await fetch(evt.request);
-      await cache.put(evt.request, liveRes.clone());
-      return liveRes;
-    })(),
-  );
-});
-
-self.addEventListener("activate", (evt: ExtendableEvent) => {
-  evt.waitUntil(
-    caches.keys().then((keyList) =>
+  caches
+    .keys()
+    .then((keyList) =>
       Promise.all(
         keyList.map((key) => {
           if (key === cacheName) {
@@ -39,6 +29,86 @@ self.addEventListener("activate", (evt: ExtendableEvent) => {
           return caches.delete(key);
         }),
       ),
-    ),
+    )
+    .catch((err) => {
+      log("failed to clear old caches", err);
+    });
+});
+
+self.addEventListener("online", () => {
+  log("online");
+});
+
+self.addEventListener("fetch", (evt: FetchEvent) => {
+  evt.respondWith(
+    (async () => {
+      const cache = await caches.open(cacheName);
+      const cachedResponse = await cache.match(evt.request);
+      const cachedBlob = await cachedResponse?.clone().blob();
+
+      const fetchPromise = (async () => {
+        try {
+          const liveResponse = await fetch(evt.request);
+          const liveBlob = await liveResponse.clone().blob();
+
+          if (liveResponse?.ok) {
+            let changed = true;
+
+            if (cachedBlob) {
+              // size check lets us skip B64 comparison
+              if (cachedBlob.size == liveBlob.size) {
+                const cachedBlobB64 = await blobToBase64(cachedBlob);
+                const liveBlobB64 = await blobToBase64(liveBlob);
+                if (cachedBlobB64 == liveBlobB64) {
+                  changed = false;
+                }
+              }
+            }
+
+            if (changed) {
+              log(evt.request.url + " has changed - suggesting a refresh");
+              cache
+                .put(evt.request, liveResponse.clone())
+                .then(() => {
+                  setTimeout(() => announceNewVersion(), 1000);
+                })
+                .catch((err) => {
+                  log("failed to cache entry", err);
+                });
+            } else {
+              log(evt.request.url + " has not changed");
+            }
+          }
+
+          return liveResponse.clone();
+        } catch (err) {
+          log("failed to check for updates", err);
+          return new Response();
+        }
+      })();
+
+      return cachedResponse ?? fetchPromise;
+    })(),
   );
 });
+
+function announceNewVersion() {
+  self.clients
+    .matchAll()
+    .then((clients) => clients.forEach((c) => c.postMessage("UPDATE_AVAILABLE")))
+    .catch((err) => {
+      log("failed to announce new version", err);
+    });
+}
+
+function blobToBase64(blob: Blob) {
+  return new Promise<string>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => resolve(reader.result as string);
+    reader.onerror = (err) => {
+      log("blob reader error", err);
+      reject(new Error("error reading blob"));
+    };
+    reader.readAsDataURL(blob);
+  });
+}

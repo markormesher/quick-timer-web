@@ -1,4 +1,4 @@
-FROM docker.io/node:24.8.0-slim@sha256:cadbfafeb6baf87eaaffa40b3640209c4b7fd38cebde65059d15bc39cd636b85 AS builder
+FROM docker.io/node:24.2.0-slim AS builder
 WORKDIR /app
 
 RUN corepack enable
@@ -21,4 +21,4 @@ LABEL image.registry=ghcr.io
 LABEL image.name=markormesher/quick-timer-web
 
 EXPOSE 3000
-CMD ["--host", "0.0.0.0", "--port", "3000", "--root", "/app/dist"]
+CMD ["--host", "0.0.0.0", "--port", "3000", "--root", "/app/dist", "-g", "info"]

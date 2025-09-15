@@ -8,6 +8,8 @@ function App(): ReactElement {
   const [activeTimerRemaining, setActiveTimerRemaining] = React.useState(0);
   const [animationTick, setAnimationTick] = React.useState(0);
 
+  const [updateAvailable, setUpdateAvailable] = React.useState(false);
+
   function startTimer(t: number) {
     setActiveTimerDuration(t);
     setActiveTimerStart(new Date().getTime());
@@ -30,17 +32,34 @@ function App(): ReactElement {
     setTimeout(() => setAnimationTick(now), 100);
   }, [animationTick, activeTimerDuration, activeTimerStart]);
 
+  React.useEffect(() => {
+    navigator.serviceWorker?.addEventListener("message", (evt: MessageEvent) => {
+      if (evt.data == "UPDATE_AVAILABLE") {
+        setUpdateAvailable(true);
+      }
+    });
+  }, []);
+
   if (activeTimerDuration == 0) {
-    return (
-      <div className={"timer-list"}>
-        {timers.map((t) => {
-          return (
-            <div className={"timer"} key={"timer-" + t} onClick={() => startTimer(t)}>
-              {formatTime(t)}
-            </div>
-          );
-        })}
+    const updateNotice = updateAvailable ? (
+      <div className={"footer-text footer-overlay"} onClick={() => window.location.reload()}>
+        Reload to update.
       </div>
+    ) : null;
+
+    return (
+      <>
+        <div className={"timer-list"}>
+          {timers.map((t) => {
+            return (
+              <div className={"timer"} key={"timer-" + t} onClick={() => startTimer(t)}>
+                {formatTime(t)}
+              </div>
+            );
+          })}
+        </div>
+        {updateNotice}
+      </>
     );
   }
 
@@ -51,7 +70,7 @@ function App(): ReactElement {
         style={{ height: Math.max(0, activeTimerRemaining / activeTimerDuration) * 100 + "%" }}
       ></div>
       <div className={"timer-label"}>{formatTime(activeTimerRemaining)}</div>
-      <div className={"timer-cancel"} onClick={() => setActiveTimerDuration(0)}>
+      <div className={"footer-text"} onClick={() => setActiveTimerDuration(0)}>
         Cancel
       </div>
     </div>
