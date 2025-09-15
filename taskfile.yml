@@ -168,3 +168,13 @@ tasks:
 
           echo "Image refs:"
           cat .task-meta-imgrefs | grep "." || echo "None"
+  lint:
+    cmds:
+      - task: lint-js-root
+  lint-js:
+    cmds:
+      - task: lint-js-root
+  lint-js-root:
+    dir: '{{.ROOT_DIR}}'
+    cmds:
+      - cmd: pnpm lint
