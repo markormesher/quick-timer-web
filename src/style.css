@@ -1,15 +1,23 @@
 html {
   --background-colour: #ffffff;
-  --timer-colour: #eeeeee;
+  --timer-colour: #9BCCFD;
   --divider-colour: rgba(0, 0, 0, 0.3);
   --text-color: #000000;
   --footer-background-colour: rgba(0, 0, 0, 0.1);
 }
 
+html[data-theme="dark"] {
+  --background-colour: #111111;
+  --timer-colour: #014063;
+  --divider-colour: rgba(255, 255, 255, 0.3);
+  --text-color: #ffffff;
+  --footer-background-colour: rgba(255, 255, 255, 0.1);
+}
+
 @media (prefers-color-scheme: dark) {
-  html[data-theme="dark"] {
+  html {
     --background-colour: #111111;
-    --timer-colour: #222222;
+    --timer-colour: #014063;
     --divider-colour: rgba(255, 255, 255, 0.3);
     --text-color: #ffffff;
     --footer-background-colour: rgba(255, 255, 255, 0.1);

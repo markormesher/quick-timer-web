@@ -1,0 +1,20 @@
+{
+  "name": "Quick Timer",
+  "short_name": "Quick Timer",
+
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+
+  "id": "/",
+  "start_url": "/",
+
+  "icons": [
+    {
+      "src": "icon.png",
+      "type": "image/png",
+      "sizes": "any",
+      "purpose": "any"
+    }
+  ]
+}
