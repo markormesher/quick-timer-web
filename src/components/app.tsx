@@ -20,6 +20,12 @@ function App(): ReactElement {
     setActiveTimerStart(0);
     setActiveTimerDuration(0);
 
+    if (readPref("sound-enabled") == "on") {
+      new Audio("alarm.mp3").play().catch((err) => {
+        console.log("failed to play audio", err);
+      });
+    }
+
     if (readPref("vibrate-enabled") == "on" && "vibrate" in navigator) {
       navigator.vibrate(1000);
     }
