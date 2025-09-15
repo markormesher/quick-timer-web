@@ -38,27 +38,19 @@ body {
     text-align: center;
     border-bottom: 1px solid var(--divider-colour);
     cursor: pointer;
-
-    &:last-child {
-      margin-bottom: 6rem;
-    }
   }
-}
 
-.footer-text {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  font-size: 1rem;
-  padding: 1rem 0;
+  .pref-bar {
+    width: 100%;
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--divider-colour);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
 
-  &.footer-overlay {
-    background-color: var(--footer-background-colour);
-    backdrop-filter: blur(3px);
+  >:last-child {
+    margin-bottom: 6rem;
   }
 }
 
@@ -84,5 +76,22 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+  }
+}
+
+.footer-text {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  padding: 1rem 0;
+
+  &.footer-overlay {
+    background-color: var(--footer-background-colour);
+    backdrop-filter: blur(3px);
   }
 }
