@@ -21,6 +21,7 @@
   "license": "AGPL-2.0",
   "packageManager": "pnpm@10.15.1",
   "dependencies": {
+    "material-symbols": "^0.35.1",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
   }

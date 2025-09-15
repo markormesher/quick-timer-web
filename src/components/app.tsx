@@ -1,4 +1,5 @@
 import React, { ReactElement } from "react";
+import { PrefBar } from "./prefs.js";
 
 function App(): ReactElement {
   const timers = [30_000, 60_000, 90_000, 120_000, 150_000, 180_000, 240_000];
@@ -57,6 +58,7 @@ function App(): ReactElement {
               </div>
             );
           })}
+          <PrefBar />
         </div>
         {updateNotice}
       </>
