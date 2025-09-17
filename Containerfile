@@ -1,4 +1,4 @@
-FROM docker.io/node:24.8.0-slim AS builder
+FROM docker.io/node:24.8.0-slim@sha256:cadbfafeb6baf87eaaffa40b3640209c4b7fd38cebde65059d15bc39cd636b85 AS builder
 WORKDIR /app
 
 RUN corepack enable
