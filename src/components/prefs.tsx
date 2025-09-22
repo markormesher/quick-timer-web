@@ -58,13 +58,39 @@ function usePrefToggle(key: string, values: string[]): [string, () => void] {
 
     setReactState(values[newIdx] ?? "");
     localStorage.setItem(key, values[newIdx] ?? "");
+    window.dispatchEvent(new CustomEvent<{ key: string }>("prefChanged", { detail: { key } }));
   };
 
   return [reactState, toggle];
+}
+
+function usePrefValue(key: string): string {
+  const [value, setValue] = React.useState("");
+
+  const update = React.useCallback(() => {
+    setValue(localStorage.getItem(key) ?? "");
+  }, [key, setValue]);
+
+  React.useEffect(() => {
+    const listener = (evt: CustomEventInit<{ key: string }>) => {
+      if (evt?.detail?.key == key) {
+        update();
+      }
+    };
+
+    window.addEventListener("prefChanged", listener);
+    return function cleanup() {
+      window.removeEventListener("prefChanged", listener);
+    };
+  }, [key, update]);
+
+  React.useEffect(() => update(), [update]);
+
+  return value;
 }
 
 function readPref(key: string): string {
   return localStorage.getItem(key) ?? "";
 }
 
-export { PrefBar, readPref };
+export { PrefBar, readPref, usePrefValue };

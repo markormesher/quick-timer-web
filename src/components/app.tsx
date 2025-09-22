@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import { PrefBar, readPref } from "./prefs.js";
+import { PrefBar, readPref, usePrefValue } from "./prefs.js";
 
 function App(): ReactElement {
   const timers = [30_000, 60_000, 90_000, 120_000, 150_000, 180_000, 240_000];
@@ -10,6 +10,23 @@ function App(): ReactElement {
   const [animationTick, setAnimationTick] = React.useState(0);
 
   const [updateAvailable, setUpdateAvailable] = React.useState(false);
+
+  const theme = usePrefValue("theme");
+  React.useEffect(() => {
+    switch (theme) {
+      case "auto":
+        document.documentElement.dataset["theme"] = "";
+        break;
+
+      case "light":
+        document.documentElement.dataset["theme"] = "light";
+        break;
+
+      case "dark":
+        document.documentElement.dataset["theme"] = "dark";
+        break;
+    }
+  }, [theme]);
 
   const startTimer = (t: number) => {
     setActiveTimerDuration(t);
