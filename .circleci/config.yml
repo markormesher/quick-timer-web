@@ -38,14 +38,14 @@ jobs:
           at: .
       - restore_cache:
           keys:
-            - deps-js-v6-{{ checksum ".task-meta-cachekey-js" }}
-            - deps-js-v6-
+            - deps-js-v7-{{ checksum ".task-meta-cachekey-js" }}
+            - deps-js-v7-
       - run:
           command: |-
-            corepack enable
+            npm install -g --force yarn pnpm
             ./task deps-js
       - save_cache:
-          key: deps-js-v6-{{ checksum ".task-meta-cachekey-js" }}
+          key: deps-js-v7-{{ checksum ".task-meta-cachekey-js" }}
           paths:
             - /usr/local/lib/node_modules
             - node_modules
@@ -95,11 +95,11 @@ jobs:
           at: .
       - restore_cache:
           keys:
-            - deps-js-v6-{{ checksum ".task-meta-cachekey-js" }}
-            - deps-js-v6-
+            - deps-js-v7-{{ checksum ".task-meta-cachekey-js" }}
+            - deps-js-v7-
       - run:
           command: |-
-            corepack enable
+            npm install -g --force yarn pnpm
             ./task lint-js
 workflows:
   version: 2
