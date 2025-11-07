@@ -43,7 +43,7 @@ importers:
         specifier: ^5.7.2
         version: 5.9.2
       vite:
-        specifier: ^7.0.0
+        specifier: ^7.1.11
         version: 7.1.11(@types/node@24.4.0)(terser@5.44.0)
 
 packages:
