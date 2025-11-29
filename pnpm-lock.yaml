@@ -19,13 +19,13 @@ importers:
         version: 19.2.0(react@19.2.0)
     devDependencies:
       '@markormesher/eslint-config':
-        specifier: github:markormesher/eslint-config#semver:^v0.2.1
+        specifier: github:markormesher/eslint-config#semver:v0.2.1
         version: https://codeload.github.com/markormesher/eslint-config/tar.gz/0e03984217b36e168b060cdbcde27abdd8cafd5b(eslint@9.35.0)(typescript@5.9.2)
       '@tsconfig/strictest':
-        specifier: ^2.0.5
+        specifier: 2.0.5
         version: 2.0.5
       '@types/node':
-        specifier: ^24.4.0
+        specifier: 24.4.0
         version: 24.4.0
       '@types/react':
         specifier: 19.2.7
@@ -34,16 +34,16 @@ importers:
         specifier: 19.2.3
         version: 19.2.3(@types/react@19.2.7)
       eslint:
-        specifier: ^9.17.0
+        specifier: 9.35.0
         version: 9.35.0
       prettier:
-        specifier: ^3.4.2
+        specifier: 3.6.2
         version: 3.6.2
       typescript:
-        specifier: ^5.7.2
+        specifier: 5.9.2
         version: 5.9.2
       vite:
-        specifier: ^7.0.0
+        specifier: 7.1.11
         version: 7.1.11(@types/node@24.4.0)(terser@5.44.0)
 
 packages:
