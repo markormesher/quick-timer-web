@@ -8,7 +8,7 @@
     "lint": "eslint ./src && prettier -c ./src/**/*.css"
   },
   "devDependencies": {
-    "@markormesher/eslint-config": "github:markormesher/eslint-config#semver:v0.3.16",
+    "@markormesher/eslint-config": "github:markormesher/eslint-config#semver:v0.3.17",
     "@tsconfig/strictest": "2.0.8",
     "@types/node": "24.10.4",
     "@types/react": "19.2.7",
