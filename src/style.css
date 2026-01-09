@@ -15,7 +15,7 @@ html[data-theme="dark"] {
 }
 
 @media (prefers-color-scheme: dark) {
-  html {
+  html:not([data-theme="light"]) {
     --background-colour: #111111;
     --timer-colour: #014063;
     --divider-colour: rgba(255, 255, 255, 0.3);
