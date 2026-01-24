@@ -17,8 +17,14 @@ WORKDIR /app
 
 COPY --from=builder /app/dist /app/dist
 
-LABEL image.registry=ghcr.io
-LABEL image.name=markormesher/quick-timer-web
-
 EXPOSE 3000
 CMD ["--host", "0.0.0.0", "--port", "3000", "--root", "/app/dist", "-g", "info"]
+
+LABEL image.name=markormesher/quick-timer-web
+LABEL image.registry=ghcr.io
+LABEL org.opencontainers.image.description=""
+LABEL org.opencontainers.image.documentation=""
+LABEL org.opencontainers.image.title="quick-timer-web"
+LABEL org.opencontainers.image.url="https://github.com/markormesher/quick-timer-web"
+LABEL org.opencontainers.image.vendor=""
+LABEL org.opencontainers.image.version=""
