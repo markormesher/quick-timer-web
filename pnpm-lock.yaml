@@ -19,8 +19,8 @@ importers:
         version: 19.2.3(react@19.2.3)
     devDependencies:
       '@markormesher/eslint-config':
-        specifier: github:markormesher/eslint-config#semver:v0.3.26
-        version: https://codeload.github.com/markormesher/eslint-config/tar.gz/96e1c8d38caf576c7f3739781d027216561de3e4(eslint@9.39.2)(typescript@5.9.3)
+        specifier: github:markormesher/eslint-config#semver:v0.3.27
+        version: https://codeload.github.com/markormesher/eslint-config/tar.gz/6b55dc1f594e157dd7249868f4c8913099f3e53d(eslint@9.39.2)(typescript@5.9.3)
       '@tsconfig/strictest':
         specifier: 2.0.8
         version: 2.0.8
@@ -344,8 +344,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
-  '@markormesher/eslint-config@https://codeload.github.com/markormesher/eslint-config/tar.gz/96e1c8d38caf576c7f3739781d027216561de3e4':
-    resolution: {tarball: https://codeload.github.com/markormesher/eslint-config/tar.gz/96e1c8d38caf576c7f3739781d027216561de3e4}
+  '@markormesher/eslint-config@https://codeload.github.com/markormesher/eslint-config/tar.gz/6b55dc1f594e157dd7249868f4c8913099f3e53d':
+    resolution: {tarball: https://codeload.github.com/markormesher/eslint-config/tar.gz/6b55dc1f594e157dd7249868f4c8913099f3e53d}
     version: 0.0.0
     peerDependencies:
       eslint: '>=8.0.0 <10.0.0'
@@ -1929,7 +1929,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
 
-  '@markormesher/eslint-config@https://codeload.github.com/markormesher/eslint-config/tar.gz/96e1c8d38caf576c7f3739781d027216561de3e4(eslint@9.39.2)(typescript@5.9.3)':
+  '@markormesher/eslint-config@https://codeload.github.com/markormesher/eslint-config/tar.gz/6b55dc1f594e157dd7249868f4c8913099f3e53d(eslint@9.39.2)(typescript@5.9.3)':
     dependencies:
       '@eslint/js': 9.39.2
       '@typescript-eslint/eslint-plugin': 8.43.0(@typescript-eslint/parser@8.43.0(eslint@9.39.2)(typescript@5.9.3))(eslint@9.39.2)(typescript@5.9.3)
