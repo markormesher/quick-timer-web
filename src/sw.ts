@@ -21,13 +21,15 @@ self.addEventListener("activate", () => {
     .keys()
     .then((keyList) =>
       Promise.all(
-        keyList.map((key) => {
-          if (key === cacheName) {
-            return undefined;
-          }
-          log("deleting old cache '" + key + "'");
-          return caches.delete(key);
-        }),
+        keyList
+          .map((key) => {
+            if (key === cacheName) {
+              return undefined;
+            }
+            log("deleting old cache '" + key + "'");
+            return caches.delete(key);
+          })
+          .filter((p) => p !== undefined),
       ),
     )
     .catch((err) => {
