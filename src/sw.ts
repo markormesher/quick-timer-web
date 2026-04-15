@@ -1,21 +1,21 @@
-declare const self: ServiceWorkerGlobalScope;
-
 const cacheName = "qtw-v2";
+
+const s = self as unknown as ServiceWorkerGlobalScope;
 
 function log(...args: unknown[]) {
   const [msg, ...moreArgs] = args;
   console.log("[SW] " + (msg as string), ...moreArgs);
 }
 
-self.addEventListener("install", () => {
+s.addEventListener("install", () => {
   log("installing");
-  self.skipWaiting().catch((err) => log("failed to skip waiting", err));
+  s.skipWaiting().catch((err) => log("failed to skip waiting", err));
 });
 
-self.addEventListener("activate", () => {
+s.addEventListener("activate", () => {
   log("activating");
 
-  self.clients.claim().catch((err) => log("failed to claim clients", err));
+  s.clients.claim().catch((err) => log("failed to claim clients", err));
 
   caches
     .keys()
@@ -37,11 +37,11 @@ self.addEventListener("activate", () => {
     });
 });
 
-self.addEventListener("online", () => {
+s.addEventListener("online", () => {
   log("online");
 });
 
-self.addEventListener("fetch", (evt: FetchEvent) => {
+s.addEventListener("fetch", (evt: FetchEvent) => {
   evt.respondWith(
     (async () => {
       const cache = await caches.open(cacheName);
@@ -95,7 +95,7 @@ self.addEventListener("fetch", (evt: FetchEvent) => {
 });
 
 function announceNewVersion() {
-  self.clients
+  s.clients
     .matchAll()
     .then((clients) => clients.forEach((c) => c.postMessage("UPDATE_AVAILABLE")))
     .catch((err) => {
