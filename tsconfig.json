@@ -10,7 +10,8 @@
       "webworker",
       "dom"
     ],
-    "exactOptionalPropertyTypes": false
+    "exactOptionalPropertyTypes": false,
+    "noUncheckedSideEffectImports": false
   },
   "include": [
     "./src/**/*.ts",
