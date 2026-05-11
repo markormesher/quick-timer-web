@@ -10,7 +10,7 @@ importers:
     dependencies:
       material-symbols:
         specifier: ^0.44.0
-        version: 0.44.4
+        version: 0.44.5
       react:
         specifier: ^19.1.1
         version: 19.2.5
@@ -1117,8 +1117,8 @@ packages:
   lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
 
-  material-symbols@0.44.4:
-    resolution: {integrity: sha512-ccUeNNV+zdpO/ZB/IYgLFBk8HLBdT6O/89SYtMZFLizAwVokbCzhpWkJq67im781OOB3PYpe2Cm2sVy+Nbs36A==}
+  material-symbols@0.44.5:
+    resolution: {integrity: sha512-kmH7ou5UzH1MFfTXhAzsmf32WoNxndVann8nS1kMbR1XrmWyxE4d1XhrItyMS+Ku91TkDm3trzUPWNiU5h7MEw==}
 
   math-intrinsics@1.1.0:
     resolution: {integrity: sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==}
@@ -2761,7 +2761,7 @@ snapshots:
     dependencies:
       yallist: 3.1.1
 
-  material-symbols@0.44.4: {}
+  material-symbols@0.44.5: {}
 
   math-intrinsics@1.1.0: {}
 
