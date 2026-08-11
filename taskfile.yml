@@ -29,6 +29,7 @@ tasks:
     dir: '{{.ROOT_DIR}}'
     cmds:
       - cmd: pnpm install --frozen-lockfile
+      - cmd: pnpm peers check
   imgbuild:
     cmds:
       - task: imgbuild-root
