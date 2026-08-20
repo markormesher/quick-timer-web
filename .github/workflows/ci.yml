@@ -3,21 +3,27 @@ name: CI
 "on":
   - push
 jobs:
-  check-js:
+  check-root-js:
     runs-on: ubuntu-latest
     container:
       image: docker.io/node:25.9.0@sha256:78839ac448c23517f8eab2e8f7943d9b4f73979eb7f8bed2c73dbf72ff869e7b
     steps:
       - uses: markormesher/ci-resources/setup@c733feb84c0204cdc0bd46f6f8ca557209bb5c33 # v0.8.0
       - run: npm install -g --force yarn pnpm
-      - run: ./task deps-js
-      - run: ./task lint-js
+      - env:
+          CI_CACHE_TOKEN: ${{ secrets.CI_CACHE_TOKEN }}
+        run: ./task -s cacheload-root-js
+      - run: ./task -s deps-root-js
+      - run: ./task -s lint-root-js
+      - env:
+          CI_CACHE_TOKEN: ${{ secrets.CI_CACHE_TOKEN }}
+        run: ./task -s cachesave-root-js
   ci-all:
     runs-on: ubuntu-latest
     if: always()
     needs:
-      - check-js
-      - img-build-push
+      - check-root-js
+      - img-root
     container:
       image: docker.io/busybox:1.38.0@sha256:dc2d74b28e4cf8984fa52af1f39bc7c3d9c73760b41a74d629f5d11b1ab28616
     steps:
@@ -28,15 +34,15 @@ jobs:
             exit 1
           fi
           echo "All jobs passed"
-  img-build-push:
+  img-root:
     runs-on: ubuntu-latest
     needs:
-      - check-js
+      - check-root-js
     permissions:
       packages: write
     steps:
       - uses: markormesher/ci-resources/setup@c733feb84c0204cdc0bd46f6f8ca557209bb5c33 # v0.8.0
       - run: buildah login ghcr.io -u "${{ github.actor }}" -p "${{ github.token }}"
-      - run: ./task imgrefs
-      - run: ./task imgbuild
-      - run: ./task imgpush
+      - run: ./task -s imgrefs-root
+      - run: ./task -s imgbuild-root
+      - run: ./task -s imgpush-root
