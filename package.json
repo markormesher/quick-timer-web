@@ -19,7 +19,7 @@
     "vite": "8.2.2"
   },
   "license": "AGPL-2.0",
-  "packageManager": "pnpm@11.25.0",
+  "packageManager": "pnpm@12.3.4",
   "dependencies": {
     "material-symbols": "^0.47.0",
     "react": "^19.1.1",
