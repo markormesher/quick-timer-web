@@ -273,3 +273,13 @@ tasks:
     dir: '{{.ROOT_DIR}}'
     cmds:
       - cmd: pnpm lint
+  lintfix:
+    cmds:
+      - task: lintfix-root-js
+  lintfix-root:
+    cmds:
+      - task: lintfix-root-js
+  lintfix-root-js:
+    dir: '{{.ROOT_DIR}}'
+    cmds:
+      - cmd: pnpm lintfix
