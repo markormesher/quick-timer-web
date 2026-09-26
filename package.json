@@ -9,8 +9,8 @@
     "lintfix": "biome lint --write && biome format --write"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.5.14",
-    "@markormesher/biome-config": "github:markormesher/biome-config#semver:^0.3.3",
+    "@biomejs/biome": "2.5.14",
+    "@markormesher/biome-config": "github:markormesher/biome-config#semver:0.3.4",
     "@tsconfig/strictest": "2.0.8",
     "@types/node": "24.13.6",
     "@types/react": "19.3.0",

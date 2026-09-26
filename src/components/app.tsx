@@ -15,15 +15,15 @@ function App(): ReactElement {
 	React.useEffect(() => {
 		switch (theme) {
 			case "auto":
-				document.documentElement.dataset.theme = "";
+				document.documentElement.dataset["theme"] = "";
 				break;
 
 			case "light":
-				document.documentElement.dataset.theme = "light";
+				document.documentElement.dataset["theme"] = "light";
 				break;
 
 			case "dark":
-				document.documentElement.dataset.theme = "dark";
+				document.documentElement.dataset["theme"] = "dark";
 				break;
 		}
 	}, [theme]);
