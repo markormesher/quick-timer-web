@@ -1,125 +1,122 @@
-import React, { ReactElement } from "react";
+import React, { type ReactElement } from "react";
 import { PrefBar, readPref, usePrefValue } from "./prefs.js";
 
 function App(): ReactElement {
-  const timers = [30_000, 60_000, 90_000, 120_000, 150_000, 180_000, 240_000];
+	const timers = [30_000, 60_000, 90_000, 120_000, 150_000, 180_000, 240_000];
 
-  const [activeTimerStart, setActiveTimerStart] = React.useState(0);
-  const [activeTimerDuration, setActiveTimerDuration] = React.useState(0);
-  const [activeTimerRemaining, setActiveTimerRemaining] = React.useState(0);
-  const [animationTick, setAnimationTick] = React.useState(0);
+	const [activeTimerStart, setActiveTimerStart] = React.useState(0);
+	const [activeTimerDuration, setActiveTimerDuration] = React.useState(0);
+	const [activeTimerRemaining, setActiveTimerRemaining] = React.useState(0);
+	const [_animationTick, setAnimationTick] = React.useState(0);
 
-  const [updateAvailable, setUpdateAvailable] = React.useState(false);
+	const [updateAvailable, setUpdateAvailable] = React.useState(false);
 
-  const theme = usePrefValue("theme");
-  React.useEffect(() => {
-    switch (theme) {
-      case "auto":
-        document.documentElement.dataset["theme"] = "";
-        break;
+	const theme = usePrefValue("theme");
+	React.useEffect(() => {
+		switch (theme) {
+			case "auto":
+				document.documentElement.dataset.theme = "";
+				break;
 
-      case "light":
-        document.documentElement.dataset["theme"] = "light";
-        break;
+			case "light":
+				document.documentElement.dataset.theme = "light";
+				break;
 
-      case "dark":
-        document.documentElement.dataset["theme"] = "dark";
-        break;
-    }
-  }, [theme]);
+			case "dark":
+				document.documentElement.dataset.theme = "dark";
+				break;
+		}
+	}, [theme]);
 
-  const startTimer = (t: number) => {
-    setActiveTimerDuration(t);
-    setActiveTimerStart(new Date().getTime());
-  };
+	const startTimer = (t: number) => {
+		setActiveTimerDuration(t);
+		setActiveTimerStart(Date.now());
+	};
 
-  const onTimerFinished = React.useCallback(() => {
-    setActiveTimerStart(0);
-    setActiveTimerDuration(0);
+	const onTimerFinished = React.useCallback(() => {
+		setActiveTimerStart(0);
+		setActiveTimerDuration(0);
 
-    if (readPref("sound-enabled") == "on") {
-      new Audio("alarm.mp3").play().catch((err) => {
-        console.log("failed to play audio", err);
-      });
-    }
+		if (readPref("sound-enabled") === "on") {
+			new Audio("alarm.mp3").play().catch((err) => {
+				console.log("failed to play audio", err);
+			});
+		}
 
-    if (readPref("vibrate-enabled") == "on" && "vibrate" in navigator) {
-      navigator.vibrate(1000);
-    }
-  }, []);
+		if (readPref("vibrate-enabled") === "on" && "vibrate" in navigator) {
+			navigator.vibrate(1000);
+		}
+	}, []);
 
-  React.useEffect(() => {
-    if (activeTimerStart == 0 || activeTimerDuration == 0) {
-      return;
-    }
+	React.useEffect(() => {
+		if (activeTimerStart === 0 || activeTimerDuration === 0) {
+			return;
+		}
 
-    const now = new Date().getTime();
-    const remaining = activeTimerDuration - (now - activeTimerStart);
-    if (remaining <= 0) {
-      onTimerFinished();
-      return;
-    }
+		const now = Date.now();
+		const remaining = activeTimerDuration - (now - activeTimerStart);
+		if (remaining <= 0) {
+			onTimerFinished();
+			return;
+		}
 
-    setActiveTimerRemaining(remaining);
-    setTimeout(() => setAnimationTick(now), 100);
-  }, [animationTick, activeTimerDuration, activeTimerStart, onTimerFinished]);
+		setActiveTimerRemaining(remaining);
+		setTimeout(() => setAnimationTick(now), 100);
+	}, [activeTimerDuration, activeTimerStart, onTimerFinished]);
 
-  React.useEffect(() => {
-    navigator.serviceWorker?.addEventListener("message", (evt: MessageEvent) => {
-      if (evt.data == "UPDATE_AVAILABLE") {
-        setUpdateAvailable(true);
-      }
-    });
-  }, []);
+	React.useEffect(() => {
+		navigator.serviceWorker?.addEventListener("message", (evt: MessageEvent) => {
+			if (evt.data === "UPDATE_AVAILABLE") {
+				setUpdateAvailable(true);
+			}
+		});
+	}, []);
 
-  if (activeTimerDuration == 0) {
-    const updateNotice = updateAvailable ? (
-      <div className={"footer-text footer-overlay"} onClick={() => window.location.reload()}>
-        Reload to update.
-      </div>
-    ) : null;
+	if (activeTimerDuration === 0) {
+		const updateNotice = updateAvailable ? (
+			<div className={"footer-text footer-overlay"} onClick={() => window.location.reload()}>
+				Reload to update.
+			</div>
+		) : null;
 
-    return (
-      <>
-        <div className={"timer-list"}>
-          {timers.map((t) => {
-            return (
-              <div className={"timer"} key={"timer-" + t} onClick={() => startTimer(t)}>
-                {formatTime(t)}
-              </div>
-            );
-          })}
-          <PrefBar />
-        </div>
-        {updateNotice}
-      </>
-    );
-  }
+		return (
+			<>
+				<div className={"timer-list"}>
+					{timers.map((t) => {
+						return (
+							<div className={"timer"} key={`timer-${t}`} onClick={() => startTimer(t)}>
+								{formatTime(t)}
+							</div>
+						);
+					})}
+					<PrefBar />
+				</div>
+				{updateNotice}
+			</>
+		);
+	}
 
-  return (
-    <div className={"timer-display-wrapper"}>
-      <div
-        className={"timer-bg"}
-        style={{ height: Math.max(0, activeTimerRemaining / activeTimerDuration) * 100 + "%" }}
-      ></div>
-      <div className={"timer-label"}>{formatTime(activeTimerRemaining)}</div>
-      <div className={"footer-text"} onClick={() => setActiveTimerDuration(0)}>
-        Cancel
-      </div>
-    </div>
-  );
+	return (
+		<div className={"timer-display-wrapper"}>
+			<div className={"timer-bg"} style={{ height: `${Math.max(0, activeTimerRemaining / activeTimerDuration) * 100}%` }}></div>
+			<div className={"timer-label"}>{formatTime(activeTimerRemaining)}</div>
+			<div className={"footer-text"} onClick={() => setActiveTimerDuration(0)}>
+				Cancel
+			</div>
+		</div>
+	);
 }
 
 function formatTime(ms: number): string {
-  const seconds = Math.floor(ms / 1000) % 60;
-  const minutes = Math.floor(ms / 1000 / 60);
+	const seconds = Math.floor(ms / 1000) % 60;
+	const minutes = Math.floor(ms / 1000 / 60);
 
-  let out = seconds.toLocaleString("en-GB", { minimumIntegerDigits: 2 }) + "s";
-  if (minutes > 0) {
-    out = minutes.toLocaleString("en-GB", { minimumIntegerDigits: 2 }) + "m " + out;
-  }
+	let out = `${seconds.toLocaleString("en-GB", { minimumIntegerDigits: 2 })}s`;
+	if (minutes > 0) {
+		out = `${minutes.toLocaleString("en-GB", { minimumIntegerDigits: 2 })}m ${out}`;
+	}
 
-  return out;
+	return out;
 }
 
 export { App };

@@ -180,8 +180,8 @@ importers:
         specifier: ^2.5.14
         version: 2.5.14
       '@markormesher/biome-config':
-        specifier: github:markormesher/biome-config#semver:^0.1.0
-        version: https://codeload.github.com/markormesher/biome-config/tar.gz/4ad10eb6c2cd9ddb114c4897c44bcd5964a677cf
+        specifier: github:markormesher/biome-config#semver:^0.3.3
+        version: https://codeload.github.com/markormesher/biome-config/tar.gz/643e9d95e78c06a4d7a2c58318ba331c61b07a22
       '@tsconfig/strictest':
         specifier: 2.0.8
         version: 2.0.8
@@ -260,8 +260,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@markormesher/biome-config@https://codeload.github.com/markormesher/biome-config/tar.gz/4ad10eb6c2cd9ddb114c4897c44bcd5964a677cf':
-    resolution: {gitHosted: true, integrity: sha512-fdhHkgYIU2Y52bseNnrXdyPj1P6CGCT0YeRxdU0f5uZBR0ifq0YWDIkj9+csuYGznp0DDRZXE6xenaWEh70YvQ==, tarball: https://codeload.github.com/markormesher/biome-config/tar.gz/4ad10eb6c2cd9ddb114c4897c44bcd5964a677cf}
+  '@markormesher/biome-config@https://codeload.github.com/markormesher/biome-config/tar.gz/643e9d95e78c06a4d7a2c58318ba331c61b07a22':
+    resolution: {gitHosted: true, integrity: sha512-LxQRlAd+9s1HE1RT9z0cxgHxE1lVB0yZCtmwI6GUjLx9mWcc0hjuSxa9cA1H1keJ5rffNJAPQL+uCQKiewoJOA==, tarball: https://codeload.github.com/markormesher/biome-config/tar.gz/643e9d95e78c06a4d7a2c58318ba331c61b07a22}
     version: 0.0.0
 
   '@oxc-project/types@0.150.0':
@@ -607,7 +607,7 @@ snapshots:
   '@biomejs/cli-win32-x64@2.5.14':
     optional: true
 
-  '@markormesher/biome-config@https://codeload.github.com/markormesher/biome-config/tar.gz/4ad10eb6c2cd9ddb114c4897c44bcd5964a677cf': {}
+  '@markormesher/biome-config@https://codeload.github.com/markormesher/biome-config/tar.gz/643e9d95e78c06a4d7a2c58318ba331c61b07a22': {}
 
   '@oxc-project/types@0.150.0': {}
 
