@@ -1,20 +1,13 @@
 {
-  "extends": "@tsconfig/strictest/tsconfig.json",
-  "compilerOptions": {
-    "rootDir": "./src",
-    "noEmit": true,
-    "jsx": "react",
-    "types": ["node"],
-    "lib": [
-      "esnext",
-      "webworker",
-      "dom"
-    ],
-    "exactOptionalPropertyTypes": false,
-    "noUncheckedSideEffectImports": false
-  },
-  "include": [
-    "./src/**/*.ts",
-    "./src/**/*.tsx"
-  ]
+	"extends": "@tsconfig/strictest/tsconfig.json",
+	"compilerOptions": {
+		"rootDir": "./src",
+		"noEmit": true,
+		"jsx": "react-jsx",
+		"types": ["node"],
+		"lib": ["esnext", "webworker", "dom"],
+		"exactOptionalPropertyTypes": false,
+		"noUncheckedSideEffectImports": false
+	},
+	"include": ["./src/**/*.ts", "./src/**/*.tsx"]
 }
