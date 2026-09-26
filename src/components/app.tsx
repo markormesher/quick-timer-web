@@ -7,7 +7,7 @@ function App(): ReactElement {
 	const [activeTimerStart, setActiveTimerStart] = React.useState(0);
 	const [activeTimerDuration, setActiveTimerDuration] = React.useState(0);
 	const [activeTimerRemaining, setActiveTimerRemaining] = React.useState(0);
-	const [_animationTick, setAnimationTick] = React.useState(0);
+	const [animationTick, setAnimationTick] = React.useState(0);
 
 	const [updateAvailable, setUpdateAvailable] = React.useState(false);
 
@@ -61,8 +61,8 @@ function App(): ReactElement {
 		}
 
 		setActiveTimerRemaining(remaining);
-		setTimeout(() => setAnimationTick(now), 100);
-	}, [activeTimerDuration, activeTimerStart, onTimerFinished]);
+		setTimeout(() => setAnimationTick(animationTick + 1), 100);
+	}, [activeTimerDuration, activeTimerStart, onTimerFinished, animationTick]);
 
 	React.useEffect(() => {
 		navigator.serviceWorker?.addEventListener("message", (evt: MessageEvent) => {
