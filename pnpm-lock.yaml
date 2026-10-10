@@ -167,8 +167,8 @@ importers:
   .:
     dependencies:
       material-symbols:
-        specifier: ^0.47.0
-        version: 0.47.6
+        specifier: ^0.48.0
+        version: 0.48.0
       react:
         specifier: ^19.1.1
         version: 19.3.0
@@ -595,8 +595,8 @@ packages:
     resolution: {integrity: sha512-WkUDrojuJs0xkgGf2udWxa3yGBRxPtxUkB79i6aCZLRgc7PM8fZe9TosfPDcvEpQZbuFASnHYmRLBLUbmLOIIA==}
     engines: {node: '>= 12.0.0'}
 
-  material-symbols@0.47.6:
-    resolution: {integrity: sha512-+W09H5h13mk/+xyVAQoZPWCubIQU20QRzNlyc1Bt9gaFqWnO+P6NnexfNH2D2EXvB4kAn8A7BMhEJ8qBCNvRkQ==}
+  material-symbols@0.48.0:
+    resolution: {integrity: sha512-onKVWr4wcIWRbm+u+vkICQkw68KLqR2NRNhI0eafWvkE1FnHXHsQ8yUuSpkmVeARhbgVB0G/5ItfMSresLsBFw==}
 
   nanoid@3.3.19:
     resolution: {integrity: sha512-Y2tUNy4ouw6tq5oDSKeQYGOyhkUBhNOcGV/02KC+6kd9eDGqdZd++mjMiIDilrBYvjEnCYvVtsuHCuP+okSfug==}
@@ -912,7 +912,7 @@ snapshots:
       lightningcss-win32-arm64-msvc: 1.33.0
       lightningcss-win32-x64-msvc: 1.33.0
 
-  material-symbols@0.47.6: {}
+  material-symbols@0.48.0: {}
 
   nanoid@3.3.19: {}
 
