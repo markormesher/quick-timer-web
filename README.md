@@ -1,4 +1,3 @@
-
 # Quick Timer
 
 > This project is a web replacement for [Quick Timer Android](https://github.com/markormesher/quick-timer).
