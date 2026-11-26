@@ -10,7 +10,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.6.8",
-    "@markormesher/biome-config": "github:markormesher/biome-config#semver:v0.3.14",
+    "@markormesher/biome-config": "github:markormesher/biome-config#semver:v0.3.15",
     "@tsconfig/strictest": "2.0.9",
     "@types/node": "26.6.6",
     "@types/react": "19.3.1",
